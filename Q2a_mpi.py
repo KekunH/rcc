@@ -52,10 +52,11 @@ eps_mat = comm.bcast(eps_mat, root = 0)
 result = np.array(sim_fast_rhos(subdata, mu, sigma, S, T, eps_mat))
 all_result = None
 if rank == 0:
-    all_result = np.empty((2,10))
+    all_result = np.empty((10,2))
 comm.Gather(result, all_result, root = 0)
 if rank == 0:
     long_t = 0
+    print(all_result)
     for val in all_result:
         rho = val[0]
         t = val[1]
