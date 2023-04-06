@@ -57,11 +57,11 @@ comm.Gather(result, all_result, root = 0)
 if rank == 0:
     long_t = 0
     for val in all_result:
-    rho = val[0]
-    t = val[1]
-    if t > long_t:
-        long_t = t
-        best_rho = rho
+        rho = val[0]
+        t = val[1]
+        if t > long_t:
+            long_t = t
+            best_rho = rho
     print(best_rho,long_t)
     end = time.time()
     print(end - start)
