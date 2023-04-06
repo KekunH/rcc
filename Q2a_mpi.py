@@ -9,6 +9,7 @@ comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 size = comm.Get_size()
 
+start = time.time()
 rho = 0.5
 mu = 3.0
 sigma = 1.0
@@ -32,12 +33,14 @@ def sim_fast_rhos(rhos, mu, sigma, S, T, eps_mat):
         if z_tm1 <= 0:
           lst.append(t_ind)
           break
+        else:
+          if t_ind == T - 1:
+            lst.append(t_ind)
     if np.array(lst).mean() > longest_period:
       longest_period = np.array(lst).mean()
       best_rho = rho        
   return (best_rho, longest_period)
 
-start = time.time()
 data = None
 eps_mat = None
 if rank == 0:
@@ -45,11 +48,11 @@ if rank == 0:
   eps_mat = sts.norm.rvs(loc = 0, scale = sigma, size = (T,S))
   data = np.linspace(-0.95, 0.95, 200)
 subdata = np.empty(20)
-sub_eps = np.empty((416,S))
-comm.Scatter(data, subdata, root = 0)
-comm.Scatter(eps_mat, sub_eps, root = 0)
 
-result = np.array(sim_fast_rhos(subdata, mu, sigma, S, 416, sub_eps))
+comm.Scatter(data, subdata, root = 0)
+eps_mat = comm.bcast(eps_mat, root = 0)
+
+result = np.array(sim_fast_rhos(subdata, mu, sigma, S, T, eps_mat))
 all_result = None
 if rank == 0:
   all_result = np.empty((2,10))
@@ -62,7 +65,6 @@ if rank == 0:
     if t > long_t:
       long_t = t
       best_rho = rho
-  print(best_rho)
+  print(best_rho,long_t)
   end = time.time()
   print(end - start)
-
