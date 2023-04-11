@@ -16,5 +16,5 @@ module load intelmpi/2018.2.199+intel-18.0
 # Slurm environment variables.
 for i in {1..20}
 do
-  mpirun -n $i python3 Q1b_mpi.py >> mpi.out
+  mpirun -n $i python3 Q1b_mpi.py >> Q1b.out
 done

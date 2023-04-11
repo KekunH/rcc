@@ -2,7 +2,7 @@ from mpi4py import MPI
 import numpy as np
 import scipy.stats as sts
 import time
-from numba.pycc import cc 
+from numba.pycc import CC
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -59,7 +59,6 @@ if rank == 0:
 comm.Gather(result, all_result, root = 0)
 if rank == 0:
     long_t = 0
-    print(all_result)
     for val in all_result:
         rho = val[0]
         t = val[1]

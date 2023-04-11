@@ -1,0 +1,2 @@
+/tmp/slurmd/job26919870/slurm_script: line 16: 31083 Killed                  python3 ./Q3c.py > Q3c.out
+slurmstepd-midway2-gpu04: error: Detected 1 oom_kill event in StepId=26919870.batch. Some of the step tasks have been OOM Killed.

@@ -12,4 +12,4 @@
 module load cuda
 module load python/anaconda-2019.03
 
-python3 ./Q3a.py
+python3 ./Q3a.py > Q3a.out
