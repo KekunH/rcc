@@ -2,7 +2,7 @@ import numpy as np
 import scipy.stats as sts
 import mpi4py
 import time
-from numba import jit
+from numba.pycc import cc 
 
 rho = 0.5
 mu = 3.0
@@ -17,26 +17,29 @@ z_mat = np.zeros((T,S))
 
 start = time.perf_counter()
 for s_ind in range(S):
-  z_tm1 = z_0
-  for t_ind in range(T):
-    e_t = eps_mat[t_ind, s_ind]
-    z_t = rho * z_tm1 + (1 - rho) * mu + e_t
-    z_mat[t_ind, s_ind] = z_t
-    z_tm1 = z_t
+    z_tm1 = z_0
+    for t_ind in range(T):
+        e_t = eps_mat[t_ind, s_ind]
+        z_t = rho * z_tm1 + (1 - rho) * mu + e_t
+        z_mat[t_ind, s_ind] = z_t
+        z_tm1 = z_t
 end = time.perf_counter()
 print(end - start)
 
-@jit(nopython = True)
+cc = CC("Q1a_aot")
+@cc.export("sim_fast", "f8[:,:](f8, f8, f8, f8, i8, i8, f8[:,:], f8[:,:])")
 def sim_fast(rho, mu, sigma, z_0, S, T, eps_mat, z_mat):
-  for s_ind in range(S):
-    z_tm1 = z_0
-    for t_ind in range(T):
-      e_t = eps_mat[t_ind, s_ind]
-      z_t = rho * z_tm1 + (1 - rho) * mu + e_t
-      z_mat[t_ind, s_ind] = z_t
-      z_tm1 = z_t
-  return z_mat
+    for s_ind in range(S):
+        z_tm1 = z_0
+        for t_ind in range(T):
+            e_t = eps_mat[t_ind, s_ind]
+            z_t = rho * z_tm1 + (1 - rho) * mu + e_t
+            z_mat[t_ind, s_ind] = z_t
+            z_tm1 = z_t
+    return z_mat
+cc.compile()
 
+import Q1a_aot
 start = time.perf_counter()
 sim_fast(rho, mu, sigma, z_0, S, T, eps_mat, z_mat)
 end = time.perf_counter()

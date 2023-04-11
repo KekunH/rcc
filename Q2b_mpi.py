@@ -3,7 +3,7 @@ import numpy as np
 import scipy.stats as sts
 import mpi4py
 import time
-from numba import jit
+from numba.pycc import cc 
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -15,7 +15,8 @@ sigma = 1.0
 S = int(1000)
 T = int(4160)
 
-@jit(nopython = True)
+cc = CC("Q2b_aot")
+@cc.export("sim_fast_rhos", "f8[:,:](f8, f8, f8, i8, i8, f8[:,:])")
 def sim_fast_rhos(rhos, mu, sigma, S, T, eps_mat):
     z_0 = mu - 3*sigma
     rho_time = []
@@ -36,7 +37,9 @@ def sim_fast_rhos(rhos, mu, sigma, S, T, eps_mat):
         rho_time.append((np.array(lst).mean(), rho))
 
     return rho_time
+cc.compile()
 
+import Q2b_aot
 data = None
 eps_mat = None
 if rank == 0:
