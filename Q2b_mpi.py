@@ -37,6 +37,10 @@ def sim_fast_rhos(rhos, mu, sigma, S, T, eps_mat):
                         lst.append(t_ind)
         rho_time.append(rho)
         mean_time.append(np.array(lst).mean())
+<<<<<<< HEAD
+=======
+
+>>>>>>> e75bc1ba2a4f1c2ba937684fe66ad1d362a90a5b
     return np.array([rho_time,mean_time])
 cc.compile()
 
@@ -50,7 +54,11 @@ if rank == 0:
 subdata = np.empty(20)
 comm.Scatter(data, subdata, root = 0)
 eps_mat = comm.bcast(eps_mat, root = 0)
+<<<<<<< HEAD
 result = Q2b_aot.sim_fast_rhos(subdata, mu, sigma, S, T, eps_mat)
+=======
+result = sim_fast_rhos(subdata, mu, sigma, S, T, eps_mat)
+>>>>>>> e75bc1ba2a4f1c2ba937684fe66ad1d362a90a5b
 all_result = None
 if rank == 0:
     all_result = np.empty((200,2))
