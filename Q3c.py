@@ -14,13 +14,13 @@ nir = band5.read(1).astype("float64")
 red = np.tile(red, 20)
 nir = np.tile(nir, 20)
 
-start = time.time()
+start1 = time.time()
 ndvi = (nir - red) / (nir + red)
-end = time.time()
-print(end - start)
+end1 = time.time()
+print(end1 - start1)
 
 # NDVI calculation
-start = time.time()
+ctx = cl.create_some_context()
 queue = cl.CommandQueue(ctx)
 lin_comb = ElementwiseKernel(ctx,
                              "double *x, double *y, double *ndvi",
@@ -28,7 +28,8 @@ lin_comb = ElementwiseKernel(ctx,
 red_cl = cl_array.to_device(queue, red)
 nir_cl = cl_array.to_device(queue, nir)
 ndvi = cl.array.empty_like(red_cl)
+start2 = time.time()
 lin_comb(nir_cl, red_cl, ndvi)
 result_np = ndvi.get()
-end = time.time()
-print(end - start)
+end2 = time.time()
+print(end2 - start2)
