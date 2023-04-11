@@ -16,10 +16,11 @@ S = int(1000)
 T = int(4160)
 
 cc = CC("Q2b_aot")
-@cc.export("sim_fast_rhos", "f8[:,:](f8, f8, f8, i8, i8, f8[:,:])")
+@cc.export("sim_fast_rhos", "f8[:,:](f8[:], f8, f8, i8, i8, f8[:,:])")
 def sim_fast_rhos(rhos, mu, sigma, S, T, eps_mat):
     z_0 = mu - 3*sigma
     rho_time = []
+    mean_time = []
     for rho in rhos:
         lst = []
         for s_ind in range(S):
@@ -34,9 +35,10 @@ def sim_fast_rhos(rhos, mu, sigma, S, T, eps_mat):
                 else:
                     if t_ind == T - 1:
                         lst.append(t_ind)
-        rho_time.append((np.array(lst).mean(), rho))
+        rho_time.append(rho)
+        mean_time.append(np.array(lst).mean())
 
-    return rho_time
+    return np.array([rho_time,mean_time])
 cc.compile()
 
 import Q2b_aot
@@ -49,7 +51,7 @@ if rank == 0:
 subdata = np.empty(20)
 comm.Scatter(data, subdata, root = 0)
 eps_mat = comm.bcast(eps_mat, root = 0)
-result = np.array(sim_fast_rhos(subdata, mu, sigma, S, T, eps_mat))
+result = sim_fast_rhos(subdata, mu, sigma, S, T, eps_mat)
 all_result = None
 if rank == 0:
     all_result = np.empty((200,2))
