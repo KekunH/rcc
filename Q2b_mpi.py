@@ -53,7 +53,7 @@ eps_mat = comm.bcast(eps_mat, root = 0)
 result = Q2b_aot.sim_fast_rhos(subdata, mu, sigma, S, T, eps_mat)
 all_result = None
 if rank == 0:
-    all_result = np.empty((2,200))
+    all_result = np.empty((200,2))
 comm.Gather(result, all_result, root = 0)
 
 if rank == 0:
