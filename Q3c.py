@@ -41,6 +41,8 @@ ndvi = (nir - red) / (nir + red)
 end1 = time.time()
 print(end1 - start1)
 
+ctx = cl.create_some_context()
+queue = cl.CommandQueue(ctx)
 red_cl = cl_array.to_device(queue, red)
 nir_cl = cl_array.to_device(queue, nir)
 ndvi = cl.array.empty_like(red_cl)

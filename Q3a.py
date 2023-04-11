@@ -3,6 +3,7 @@ import numpy as np
 import pyopencl as cl
 import pyopencl.array as cl_array
 import time
+from matplotlib import pyplot
 from pyopencl.elementwise import ElementwiseKernel
 
 # Import bands as separate images; in /project2/macs30123 on Midway2
@@ -29,3 +30,4 @@ lin_comb(nir_cl, red_cl, ndvi)
 result_np = ndvi.get()
 end = time.time()
 print(end - start)
+pyplot.imsave("Q3a.png", result_mp)

@@ -2,7 +2,6 @@ import numpy as np
 import scipy.stats as sts
 from mpi4py import MPI
 import time
-from numba.pycc import cc 
 import Q1a_aot
 
 comm = MPI.COMM_WORLD

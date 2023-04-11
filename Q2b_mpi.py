@@ -3,7 +3,7 @@ import numpy as np
 import scipy.stats as sts
 import mpi4py
 import time
-from numba.pycc import cc 
+from numba.pycc import CC 
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
