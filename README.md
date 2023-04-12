@@ -2,7 +2,7 @@
 ### The computation time before speeding up is 3.1003182511776686s, the computation time after speeding up is 2.185731455683708s 
 ### ([Output](https://github.com/KekunH/rcc/blob/main/Q1/Q1a.out))
 ## Q1b ([Code](https://github.com/KekunH/rcc/blob/main/Q1/Q1b_mpi.py))
-### The graph is here ![](Q1/Q1b.png)
+### The graph is here ![](Q1/Q1b.png) ([Graph Code](https://github.com/KekunH/rcc/blob/main/Graph.ipynb))
 ## Q1c
 ### The speed up is not linear because the running time of using 1 core is already very low, there is not much potential to decrease the running time. In addition to that, running on mutiple cores require inter-connection between each core to share their results, which could delay the whole process.
 
