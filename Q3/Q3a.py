@@ -22,10 +22,10 @@ queue = cl.CommandQueue(ctx)
 lin_comb = ElementwiseKernel(ctx,
                              "double *x, double *y, double *ndvi",
                              "ndvi[i] = (x[i] - y[i])/(x[i] + y[i])")
+start = time.time()
 red_cl = cl_array.to_device(queue, red)
 nir_cl = cl_array.to_device(queue, nir)
 ndvi = cl.array.empty_like(red_cl)
-start = time.time()
 lin_comb(nir_cl, red_cl, ndvi)
 result_np = ndvi.get()
 end = time.time()
