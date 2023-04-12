@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "./Q3a.py", line 33, in <module>
-    pyplot.imsave("Q3a.png", result_mp)
-NameError: name 'result_mp' is not defined
