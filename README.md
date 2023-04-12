@@ -14,10 +14,10 @@
 ### The optimal persistence ρ is -0.03341708542713573, the average period is 754.757 ([Output](https://github.com/KekunH/rcc/blob/main/Q2/Q2a.out))
 
 ## Q3a ([Code](https://github.com/KekunH/rcc/blob/main/Q3/Q3a.py))
-### 
+### Graph ![](Q3/Q3a.png)
 ## Q3b ([Output](https://github.com/KekunH/rcc/blob/main/Q3/Q3a.out))
-### The computation time using CPU is 0.029910802841186523s, the computation time using GPU is 0.02548837661743164s. One bottleneck I might facing is that the transfering time required to send information from cpu to gpu. And GPU is only better than CPU when you are perform one task at a massive scale.
+### The computation time using CPU is 0.0320894718170166s, the computation time using GPU is 0.06987738609313965s. One bottleneck I might facing is that the transfering time required to send information from cpu to gpu. And GPU is only better than CPU when you are perform one task at a massive scale.
 ## Q3c ([Code1](https://github.com/KekunH/rcc/blob/main/Q3/Q3c_10.py)) ([Code2](https://github.com/KekunH/rcc/blob/main/Q3/Q3c_20.py))
-### When increasing the data size by 10 times, the CPU computation time is 0.2766849994659424s while the GPU computation time is 0.12201237678527832s. When increasing the data size by 20 times, the CPU computation time is 0.5563089847564697s while the GPU computation time is 0.2303164005279541s. GPU did progressively perform better than the CPU because GPU is good at perform one task at a massive scale. As the data size increase, its advantage would be more obvious. ([Output](https://github.com/KekunH/rcc/blob/main/Q3/Q3c.out))
+### When increasing the data size by 10 times, the CPU computation time is 0.28635406494140625s while the GPU computation time is 0.17806696891784668s. When increasing the data size by 20 times, the CPU computation time is 0.49985337257385254s while the GPU computation time is 0.330491304397583s. GPU did progressively perform better than the CPU because GPU is good at perform one task at a massive scale. As the data size increase, its advantage would be more obvious. ([Output](https://github.com/KekunH/rcc/blob/main/Q3/Q3c.out))
 
 
